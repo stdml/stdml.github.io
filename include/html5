@@ -1,0 +1,28 @@
+// -*- mode: c++ -*-
+#pragma once
+#include <bits/html5.hpp>
+
+namespace html5
+{
+#define DEFINE_TAG(name) const tag name(#name)
+DEFINE_TAG(a);
+DEFINE_TAG(body);
+DEFINE_TAG(div);
+DEFINE_TAG(h2);
+DEFINE_TAG(h3);
+DEFINE_TAG(head);
+DEFINE_TAG(html);
+DEFINE_TAG(li);
+DEFINE_TAG(nav);
+DEFINE_TAG(section);
+DEFINE_TAG(table);
+DEFINE_TAG(td);
+DEFINE_TAG(title);
+DEFINE_TAG(tr);
+DEFINE_TAG(ul);
+#undef DEFINE_TAG
+
+#define DEFINE_ATTR(name) const attr name(#name)
+DEFINE_ATTR(href);
+#undef DEFINE_ATTR
+}  // namespace html5
