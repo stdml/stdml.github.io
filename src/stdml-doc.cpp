@@ -1,10 +1,18 @@
+#include <fs>
+#include <fstream>
 #include <html5>
 
-void add_link(html5::element &e, const std::string &name,
-              const std::string &link)
+html5::element &add_link(html5::element &e, const std::string &name,
+                         const std::string &link)
 {
     namespace h5 = html5;
-    e.add(h5::li).add(h5::a).text(name).attr(h5::href, link);
+    return e.add(h5::a).text(name).attr(h5::href, link);
+};
+
+html5::element &add_link(html5::element &e, const std::string &link)
+{
+    namespace fs = std::filesystem;
+    return add_link(e, fs::path(link).stem(), link);
 };
 
 void index(std::ostream &os)
@@ -20,27 +28,41 @@ void index(std::ostream &os)
         s1.add(h5::h3).text("Core");
         {
             auto &ul = s1.add(h5::ul);
-            add_link(ul, "stdtensor", "https://github.com/lgarithm/stdtensor");
-            add_link(ul, "stdnn-ops", "https://github.com/lgarithm/stdnn-ops");
-            add_link(ul, "stdnn-ops-cuda",
+            {
+                auto &li = ul.add(h5::li);
+                add_link(li, "https://github.com/lgarithm/stdtensor");
+                li.add(h5::span).text("( doc: ");
+                add_link(li, "stdtensor.html").attr(h5::target, "_blank");
+                li.add(h5::span).text(")");
+            }
+            add_link(ul.add(h5::li), "https://github.com/lgarithm/stdnn-ops");
+            add_link(ul.add(h5::li),
                      "https://github.com/lgarithm/stdnn-ops-cuda");
-            add_link(ul, "nn-graph-experimental",
+            add_link(ul.add(h5::li),
                      "https://github.com/lgarithm/nn-graph-experimental");
         }
 
         s1.add(h5::h3).text("Utilities");
         {
             auto &ul = s1.add(h5::ul);
-            add_link(ul, "stdtracer", "https://github.com/lgarithm/stdtracer");
+            add_link(ul.add(h5::li), "https://github.com/lgarithm/stdtracer");
         }
     }
     doc >> os;
-    os << std::endl;
+}
+
+void std_tensor_doc(std::ostream &os);
+
+template <typename F>
+void gen_doc(const char *filename, const F &gen)
+{
+    std::ofstream fs(filename);
+    gen(fs);
 }
 
 int main()
 {
-    std::freopen("index.html", "w", stdout);
-    index(std::cout);
+    gen_doc("index.html", index);
+    gen_doc("stdtensor.html", std_tensor_doc);
     return 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,14 +24,19 @@ class tag
     static constexpr auto default_tab_size = 4;
 
     const std::string name;
-    std::map<std::string, attr::value> attrs;
+    bool single;
+    std::map<std::string, std::string> attrs;
 
   public:
-    tag(std::string name) : name(std::move(name)) {}
+    tag(std::string name, bool single = false)
+        : name(std::move(name)), single(single)
+    {
+    }
 
     std::ostream &begin(std::ostream &os, int lvl = 0,
                         int tab = default_tab_size) const
     {
+        if (name.empty()) { return os; }
         if (lvl) { os << std::string(lvl * tab, ' '); }
         os << "<" << name;
         if (!attrs.empty()) {
@@ -38,13 +44,15 @@ class tag
                 os << ' ' << k << "=\"" << v << '"';
             }
         }
-        os << ">";
+        if (single) { os << '/'; }
+        os << '>';
         return os;
     }
 
     std::ostream &end(std::ostream &os, int lvl = 0,
                       int tab = default_tab_size) const
     {
+        if (single || name.empty()) { return os; }
         if (lvl) { os << std::string(lvl * tab, ' '); }
         os << "</" << name << ">";
         return os;

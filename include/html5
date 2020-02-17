@@ -1,10 +1,17 @@
 // -*- mode: c++ -*-
 #pragma once
+#include <map>
+
 #include <bits/html5.hpp>
 
 namespace html5
 {
+const tag _empty("");
 #define DEFINE_TAG(name) const tag name(#name)
+#define DEFINE_TAG_(name) const tag name(#name, true)
+DEFINE_TAG_(br);
+DEFINE_TAG_(hr);
+DEFINE_TAG_(link);
 DEFINE_TAG(a);
 DEFINE_TAG(body);
 DEFINE_TAG(div);
@@ -12,17 +19,41 @@ DEFINE_TAG(h2);
 DEFINE_TAG(h3);
 DEFINE_TAG(head);
 DEFINE_TAG(html);
+DEFINE_TAG(id);
 DEFINE_TAG(li);
 DEFINE_TAG(nav);
 DEFINE_TAG(section);
+DEFINE_TAG(span);
 DEFINE_TAG(table);
 DEFINE_TAG(td);
 DEFINE_TAG(title);
 DEFINE_TAG(tr);
 DEFINE_TAG(ul);
 #undef DEFINE_TAG
+#undef DEFINE_TAG_
 
 #define DEFINE_ATTR(name) const attr name(#name)
+const attr _class("class");
 DEFINE_ATTR(href);
+DEFINE_ATTR(rel);
+DEFINE_ATTR(target);
+DEFINE_ATTR(type);
 #undef DEFINE_ATTR
+
+inline std::string escape(const std::string &t)
+{
+    static const std::map<char, std::string> m({
+        {'<', "&lt;"},
+        {'>', "&gt;"},
+    });
+    std::string buf;
+    for (const char ch : t) {
+        if (m.count(ch) > 0) {
+            buf += m.at(ch);
+        } else {
+            buf.push_back(ch);
+        }
+    }
+    return buf;
+}
 }  // namespace html5
