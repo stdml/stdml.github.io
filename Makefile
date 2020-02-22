@@ -1,10 +1,15 @@
 STD = -std=c++17
 OPT = -O2
 
+ifeq ($(shell uname), Darwin)
+	FLAGS += -DHAVE_STD_CPP_FS
+else
+	LINK_FLAGS += -lstdc++fs
+endif
+
 FLAGS += -I$(CURDIR)/include
 FLAGS += -I$(HOME)/local/include
 
-LINK_FLAGS += -lstdc++fs
 
 # default: gen-html
 default: generate

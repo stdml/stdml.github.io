@@ -34,8 +34,23 @@ void index(std::ostream &os)
                 li.add(h5::span).text("( doc: ");
                 add_link(li, "stdtensor.html").attr(h5::target, "_blank");
                 li.add(h5::span).text(")");
+                {
+                    auto &ul = li.add(h5::ul);
+                    ul.add(h5::li).text("ttl/cuda_tensor");
+                    ul.add(h5::li).text("ttl/device");
+                    ul.add(h5::li).text("ttl/range");
+                    ul.add(h5::li).text("ttl/shape");
+                    ul.add(h5::li).text("ttl/tensor");
+                }
             }
-            add_link(ul.add(h5::li), "https://github.com/lgarithm/stdnn-ops");
+            {
+                auto &li = ul.add(h5::li);
+                add_link(li, "https://github.com/lgarithm/stdnn-ops");
+                {
+                    auto &ul = li.add(h5::ul);
+                    ul.add(h5::li).text("ttl/nn/ops");
+                }
+            }
             add_link(ul.add(h5::li),
                      "https://github.com/lgarithm/stdnn-ops-cuda");
             add_link(ul.add(h5::li),
@@ -53,8 +68,7 @@ void index(std::ostream &os)
 
 void std_tensor_doc(std::ostream &os);
 
-template <typename F>
-void gen_doc(const char *filename, const F &gen)
+void gen_doc(const char *filename, void (*gen)(std::ostream &))
 {
     std::ofstream fs(filename);
     gen(fs);
