@@ -1,6 +1,8 @@
 #include <fs>
 #include <fstream>
 #include <html5>
+#include <stdml/doc/bits/headers.hpp>
+#include <stdml/doc/bits/repos.hpp>
 
 html5::element &add_link(html5::element &e, const std::string &name,
                          const std::string &link)
@@ -15,6 +17,8 @@ html5::element &add_link(html5::element &e, const std::string &link)
     return add_link(e, fs::path(link).stem(), link);
 };
 
+std::string hdr(const std::string &h) { return "&lt;" + h + "&gt;"; }
+
 void index(std::ostream &os)
 {
     namespace h5 = html5;
@@ -22,51 +26,85 @@ void index(std::ostream &os)
     doc.add(h5::head).add(h5::title).text("stdml");
     {
         auto &b = doc.add(h5::body);
-        auto &s1 = b.add(h5::section);
-        s1.add(h5::h2).text("A collection of libraries for machine learning.");
-
-        s1.add(h5::h3).text("Core");
         {
-            auto &ul = s1.add(h5::ul);
-            {
-                auto &li = ul.add(h5::li);
-                add_link(li, "https://github.com/lgarithm/stdtensor");
-                li.add(h5::span).text("( doc: ");
-                add_link(li, "stdtensor.html").attr(h5::target, "_blank");
-                li.add(h5::span).text(")");
-                {
-                    auto &ul = li.add(h5::ul);
-                    ul.add(h5::li).text("ttl/cuda_tensor");
-                    ul.add(h5::li).text("ttl/device");
-                    ul.add(h5::li).text("ttl/range");
-                    ul.add(h5::li).text("ttl/shape");
-                    ul.add(h5::li).text("ttl/tensor");
-                }
-            }
-            {
-                auto &li = ul.add(h5::li);
-                add_link(li, "https://github.com/lgarithm/stdnn-ops");
-                {
-                    auto &ul = li.add(h5::ul);
-                    ul.add(h5::li).text("ttl/nn/ops");
-                }
-            }
-            add_link(ul.add(h5::li),
-                     "https://github.com/lgarithm/stdnn-ops-cuda");
-            add_link(ul.add(h5::li),
-                     "https://github.com/lgarithm/nn-graph-experimental");
+            auto &s = b.add(h5::section);
+            s.add(h5::h2).text(
+                "A collection of libraries for machine learning.");
         }
-
-        s1.add(h5::h3).text("Utilities");
         {
-            auto &ul = s1.add(h5::ul);
-            add_link(ul.add(h5::li), "https://github.com/lgarithm/stdtracer");
+            auto &s = b.add(h5::section);
+            add_link(s, "header.html");
+        }
+        {
+            auto &s2 = b.add(h5::section);
+            s2.add(h5::h3).text("Core");
+            {
+                auto &ul = s2.add(h5::ul);
+                {
+                    auto &li = ul.add(h5::li);
+                    add_link(li, "https://github.com/lgarithm/stdtensor");
+                    li.add(h5::span).text("( doc: ");
+                    add_link(li, "stdtensor.html").attr(h5::target, "_blank");
+                    li.add(h5::span).text(")");
+                    {
+                        auto &ul = li.add(h5::ul);
+                        for (const auto &h : ttl_headers) {
+                            ul.add(h5::li).text(hdr(h));
+                        }
+                    }
+                }
+                {
+                    auto &li = ul.add(h5::li);
+                    add_link(li, "https://github.com/lgarithm/stdnn-ops");
+                    {
+                        auto &ul = li.add(h5::ul);
+                        for (const auto &h : ttl_nn_headers) {
+                            ul.add(h5::li).text(hdr(h));
+                        }
+                    }
+                }
+                {
+                    auto &li = ul.add(h5::li);
+                    add_link(li, "https://github.com/lgarithm/stdnn-ops-cuda");
+                    {
+                        // auto &ul = li.add(h5::ul);
+                        // ul.add(h5::li).text("ttl/nn/graph");
+                    }
+                }
+                {
+                    auto &li = ul.add(h5::li);
+                    add_link(
+                        li,
+                        "https://github.com/lgarithm/nn-graph-experimental");
+                    {
+                        auto &ul = li.add(h5::ul);
+                        for (const auto &h : ttl_nn_graph_headers) {
+                            ul.add(h5::li).text(hdr(h));
+                        }
+                    }
+                }
+            }
+            s2.add(h5::h3).text("Utilities");
+            {
+                auto &ul = s2.add(h5::ul);
+                {
+                    auto &li = ul.add(h5::li);
+                    add_link(li, "https://github.com/lgarithm/stdtracer");
+                    {
+                        auto &ul = li.add(h5::ul);
+                        for (const auto &h : tracer_headers) {
+                            ul.add(h5::li).text(hdr(h));
+                        }
+                    }
+                }
+            }
         }
     }
     doc >> os;
 }
 
 void std_tensor_doc(std::ostream &os);
+void header_doc(std::ostream &os);
 
 void gen_doc(const char *filename, void (*gen)(std::ostream &))
 {
@@ -78,5 +116,6 @@ int main()
 {
     gen_doc("index.html", index);
     gen_doc("stdtensor.html", std_tensor_doc);
+    gen_doc("header.html", header_doc);
     return 0;
 }

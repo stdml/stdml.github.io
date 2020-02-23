@@ -20,6 +20,7 @@ bin:
 gen-html: bin
 	$(CXX) $(STD) $(OPT) $(FLAGS) \
 		src/stdml-doc.cpp \
+		src/header-doc.cpp \
 		src/stdtensor-doc.cpp \
 		-o bin/gen-html $(LINK_FLAGS)
 
