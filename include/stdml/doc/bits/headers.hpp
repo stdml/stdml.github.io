@@ -23,7 +23,15 @@ const slist ttl_nn_headers({
 });
 
 const slist ttl_nn_graph_headers({
-    "ttl/nn/graph",
+    "ttl/nn/computation_graph",
+    "ttl/nn/graph/builder",
+    "ttl/nn/graph/layers",
+});
+
+const slist stdml_headers({
+    "stdml/control",
+    "stdml/models",
+    "stdml/dataset",
 });
 
 const slist tracer_headers({

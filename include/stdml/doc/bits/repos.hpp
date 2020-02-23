@@ -4,6 +4,10 @@
 
 using slist = std::vector<std::string>;
 
+struct repo {
+    std::string url;
+};
+
 const slist stdml_repos({
     "stdtensor",
     "stdnn-ops",

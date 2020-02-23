@@ -29,17 +29,18 @@ void index(std::ostream &os)
         {
             auto &s = b.add(h5::section);
             s.add(h5::h2).text(
-                "A collection of libraries for machine learning.");
+                "A collection of libraries for machine learning");
         }
         {
             auto &s = b.add(h5::section);
+            s.add(h5::h3).text("[early draft]");
             add_link(s, "header.html");
         }
         {
-            auto &s2 = b.add(h5::section);
-            s2.add(h5::h3).text("Core");
+            auto &section = b.add(h5::section);
             {
-                auto &ul = s2.add(h5::ul);
+                section.add(h5::h3).text("Core");
+                auto &ul = section.add(h5::ul);
                 {
                     auto &li = ul.add(h5::li);
                     add_link(li, "https://github.com/lgarithm/stdtensor");
@@ -84,9 +85,23 @@ void index(std::ostream &os)
                     }
                 }
             }
-            s2.add(h5::h3).text("Utilities");
             {
-                auto &ul = s2.add(h5::ul);
+                section.add(h5::h3).text("Learning");
+                auto &ul = section.add(h5::ul);
+                {
+                    auto &li = ul.add(h5::li);
+                    li.add(h5::span).text("stdml-core");
+                    {
+                        auto &ul = li.add(h5::ul);
+                        for (const auto &h : stdml_headers) {
+                            ul.add(h5::li).text(hdr(h));
+                        }
+                    }
+                }
+            }
+            {
+                section.add(h5::h3).text("Utilities");
+                auto &ul = section.add(h5::ul);
                 {
                     auto &li = ul.add(h5::li);
                     add_link(li, "https://github.com/lgarithm/stdtracer");
