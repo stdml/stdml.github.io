@@ -19,9 +19,10 @@ bin:
 
 gen-html: bin
 	$(CXX) $(STD) $(OPT) $(FLAGS) \
-		src/stdml-doc.cpp \
-		src/header-doc.cpp \
-		src/stdtensor-doc.cpp \
+		src/main.cpp \
+		src/header.cpp \
+		src/stdtensor.cpp \
+		src/index.cpp \
 		-o bin/gen-html $(LINK_FLAGS)
 
 generate: gen-html

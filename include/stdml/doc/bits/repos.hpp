@@ -15,3 +15,5 @@ const slist stdml_repos({
     "nn-graph-experimental",
     "stdtracer",
 });
+
+const std::string prefix = "https://github.com/lgarithm";
