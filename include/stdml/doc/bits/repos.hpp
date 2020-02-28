@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-using slist = std::vector<std::string>;
+#include <stdml/doc/bits/slist.hpp>
 
 struct repo {
     std::string url;

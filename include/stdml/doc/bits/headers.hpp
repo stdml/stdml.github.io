@@ -2,19 +2,27 @@
 #include <string>
 #include <vector>
 
-using slist = std::vector<std::string>;
+#include <stdml/doc/bits/slist.hpp>
 
-const slist ttl_headers({
-    "ttl/algorithm",
-    "ttl/cuda_tensor",
-    "ttl/device",
-    "ttl/range",
-    "ttl/shape",
-    "ttl/tensor",
-    "ttl/experimental/flat_tensor",
-    "ttl/experimental/raw_tensor",
-    "ttl/experimental/operators",
-});
+const slist ttl_headers =  //
+    slist({
+        "ttl/algorithm",
+        "ttl/cuda_tensor",
+        "ttl/device",
+        "ttl/flat_shape",
+        "ttl/range",
+        "ttl/shape",
+        "ttl/tensor",
+    }) +
+    slist({
+        "ttl/experimental/flat_tensor",
+        "ttl/experimental/operators",
+        "ttl/experimental/raw_tensor",
+    }) +
+    slist({
+        "ttl/mixed_tensor_buffer",
+        "ttl/tensor_buffer",
+    });
 
 const slist ttl_nn_headers({
     "ttl/nn/ops",
