@@ -38,8 +38,9 @@ const slist ttl_nn_graph_headers({
 
 const slist stdml_headers({
     "stdml/control",
-    "stdml/models",
     "stdml/dataset",
+    "stdml/evaluate",
+    "stdml/models",
 });
 
 const slist tracer_headers({

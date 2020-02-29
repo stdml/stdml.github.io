@@ -20,13 +20,14 @@ html5::element &add_link(html5::element &e, const std::string &link)
 std::string hdr(const std::string &h) { return "&lt;" + h + "&gt;"; }
 
 void show_header_list(html5::element &ul, const slist &hdrs,
-                      const std::string &repo = "")
+                      const std::string &repo = "",
+                      const std::string &tag = "master")
 {
     namespace h5 = html5;
     for (const auto &h : hdrs) {
         if (!repo.empty()) {
             const std::string url =
-                prefix + "/" + repo + "/tree/master/include/" + h;
+                prefix + "/" + repo + "/tree/" + tag + "/include/" + h;
             ul.add(h5::li)
                 .add(h5::a)
                 .text(hdr(h))
@@ -86,8 +87,9 @@ void index(std::ostream &os)
                 auto &ul = section.add(h5::ul);
                 {
                     auto &li = ul.add(h5::li);
-                    li.add(h5::span).text("stdml-core");
-                    show_header_list(li.add(h5::ul), stdml_headers);
+                    li.add(h5::span).text("stdml-experimental");
+                    show_header_list(li.add(h5::ul), stdml_headers,
+                                     "stdml-experimental", "draft");
                 }
             }
             {
