@@ -49,7 +49,9 @@ void index(std::ostream &os)
         {
             auto &s = b.add(h5::section);
             s.add(h5::h2).text(
-                "A collection of libraries for machine learning");
+                // "stdml - A collection of libraries for machine learning"
+                "stdml - The STL for machine learning"  //
+            );
         }
         {
             auto &s = b.add(h5::section);
@@ -79,7 +81,7 @@ void index(std::ostream &os)
                     auto &li = ul.add(h5::li);
                     add_link(li, prefix + "/nn-graph-experimental");
                     show_header_list(li.add(h5::ul), ttl_nn_graph_headers,
-                                     "nn-graph-experimental");
+                                     "nn-graph-experimental", "draft");
                 }
             }
             {

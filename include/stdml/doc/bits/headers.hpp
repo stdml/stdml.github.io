@@ -13,6 +13,7 @@ const slist ttl_headers =  //
         "ttl/range",
         "ttl/shape",
         "ttl/tensor",
+        "ttl/type",
     }) +
     slist({
         "ttl/experimental/flat_tensor",
@@ -41,6 +42,7 @@ const slist stdml_headers({
     "stdml/dataset",
     "stdml/evaluate",
     "stdml/models",
+    "stdml/train",
 });
 
 const slist tracer_headers({
