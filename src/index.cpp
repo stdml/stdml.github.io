@@ -50,8 +50,9 @@ void index(std::ostream &os)
             auto &s = b.add(h5::section);
             s.add(h5::h2).text(
                 // "stdml - A collection of libraries for machine learning"
-                "stdml - The STL for machine learning"  //
-            );
+                // "stdml - The STL for machine learning"  //
+                "stdml - "
+                "The Standard Template Library (STL) for machine learning");
         }
         {
             auto &s = b.add(h5::section);

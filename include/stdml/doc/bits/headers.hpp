@@ -16,9 +16,11 @@ const slist ttl_headers =  //
         "ttl/type",
     }) +
     slist({
+        "ttl/experimental/copy",
         "ttl/experimental/flat_tensor",
         "ttl/experimental/operators",
         "ttl/experimental/raw_tensor",
+        "ttl/experimental/zip",
     }) +
     slist({
         "ttl/mixed_tensor_buffer",
